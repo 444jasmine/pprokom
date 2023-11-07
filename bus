@@ -1,0 +1,97 @@
+username = input("Masukkan username: ")
+password = input("Masukkan password: ")
+
+class TiketBus:
+    def __init__(self):
+        self.data_penumpang = {}
+        self.bus_tersedia = {
+            'Bus 1': {'waktu': '08:00', 'kelas': 'Ekonomi'},
+            'Bus 2': {'waktu': '10:00', 'kelas': 'Eksekutif'},
+            'Bus 3': {'waktu': '12:00', 'kelas': 'Ekonomi'},
+        }
+        self.denah_buskita = "Rute BusKita: ... (denah rute TransJogja) ..."
+
+    def tampilkan_menu(self):
+        while True:
+            print("\nMENU:")
+            print("1. Beli Tiket")
+            print("2. Bus")
+            print("3. Data Pembelian Tiket")
+            print("4. Keluar")
+
+            pilihan = input("Pilih menu (1/2/3/4): ")
+
+            if pilihan == '1':
+                self.beli_tiket()
+            elif pilihan == '2':
+                self.menu_bus()
+            elif pilihan == '3':
+                self.data_pembelian_tiket()
+            elif pilihan == '4':
+                keluar = input("Apakah Anda ingin keluar dari program (yes/no)? ")
+                if keluar.lower() == 'yes':
+                    break
+                else:
+                    continue
+            else:
+                print("Pilihan tidak valid. Silakan pilih lagi.")
+
+    def beli_tiket(self):
+        print("\nBELI TIKET BUS")
+        nama = input("Nama: ")
+        nim = input("NIM: ")
+        jenis_kelamin = input("Jenis Kelamin: ")
+
+        keberangkatan = input("Pilih halte keberangkatan: ")
+        tujuan = input("Pilih tujuan halte: ")
+
+        print("Pilihan Kelas Bus:")
+        print("1. Ekonomi")
+        print("2. Eksekutif")
+        kelas = input("Pilih kelas bus (1/2): ")
+
+        self.data_penumpang[nim] = {
+            'nama': nama,
+            'nim': nim,
+            'jenis_kelamin': jenis_kelamin,
+            'keberangkatan': keberangkatan,
+            'tujuan': tujuan,
+            'kelas': 'Ekonomi' if kelas == '1' else 'Eksekutif'
+        }
+
+        simpan = input("Apakah Anda ingin menyimpan perubahan (yes/no)? ")
+        if simpan.lower() == 'yes':
+            print("Data tiket disimpan.")
+        else:
+            print("Data tidak disimpan.")
+
+    def menu_bus(self):
+        print("\nMENU BUS TERSEDIA")
+        for bus, info in self.bus_tersedia.items():
+            print(f"{bus}: Waktu {info['waktu']}, Kelas {info['kelas']}")
+        print("\nDENAH BUSKITA:")
+        print(self.denah_buskita)
+
+    def data_pembelian_tiket(self):
+        print("\nDATA PEMBELIAN TIKET")
+        nim = input("Masukkan NIM untuk melihat data tiket: ")
+        if nim in self.data_penumpang:
+            data = self.data_penumpang[nim]
+            print("Data Tiket:")
+            print(f"Nama: {data['nama']}")
+            print(f"NIM: {data['nim']}")
+            print(f"Jenis Kelamin: {data['jenis_kelamin']}")
+            print(f"Keberangkatan: {data['keberangkatan']}")
+            print(f"Tujuan: {data['tujuan']}")
+            print(f"Kelas Bus: {data['kelas']}")
+            cetak = input("Apakah Anda ingin mencetak tiket (oke/back)? ")
+            if cetak.lower() == 'oke':
+                print("Tiket berhasil dicetak.")
+            elif cetak.lower() == 'back':
+                return
+        else:
+            print("NIM tidak ditemukan.")
+
+if __name__ == "__main__":
+    program = TiketBus()
+    program.tampilkan_menu()
